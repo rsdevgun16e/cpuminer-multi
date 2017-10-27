@@ -1541,7 +1541,7 @@ json_t* json_rpc2_call_recur(CURL *curl, const char *url, const char *userpass,
 	const char *mes = json_string_value(message);
 	if(!strcmp(mes, "Unauthenticated")) {
 		pthread_mutex_lock(&rpc2_login_lock);
-		rpc2_login(curl);
+		//rpc2_login(curl);
 		sleep(1);
 		pthread_mutex_unlock(&rpc2_login_lock);
 		return json_rpc2_call_recur(curl, url, userpass, rpc_req,
@@ -2076,7 +2076,7 @@ bool stratum_handle_method(struct stratum_ctx *sctx, const char *s)
 
 	if (jsonrpc_2) {
 		if (!strcasecmp(method, "job")) {
-			ret = rpc2_stratum_job(sctx, params);
+			//ret = rpc2_stratum_job(sctx, params);
 		}
 		goto out;
 	}

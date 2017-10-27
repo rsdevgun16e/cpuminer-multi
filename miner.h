@@ -251,6 +251,8 @@ int scanhash_x17(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *ha
 int scanhash_xevan(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
 int scanhash_yescrypt(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
 int scanhash_zr5(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
+int scanhash_egihash(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
+bool InitEgiHashDag();
 
 /* api related */
 void *api_thread(void *userdata);
@@ -384,7 +386,7 @@ void cpu_getmodelid(char *outbuf, size_t maxsz);
 float cpu_temp(int core);
 
 struct work {
-	uint32_t data[48];
+	uint32_t data[49];
 	uint32_t target[8];
 
 	double targetdiff;

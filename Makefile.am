@@ -54,6 +54,8 @@ cpuminer_SOURCES = \
   lyra2/Lyra2.c lyra2/Sponge.c \
   yescrypt/yescrypt-common.c yescrypt/yescrypt-best.c \
   yescrypt/sha256_Y.c \
+  egihash/egihash.cpp \
+  egihash/keccak-tiny.c \
   algo/axiom.c \
   algo/bastion.c \
   algo/blake.c \
@@ -100,6 +102,7 @@ cpuminer_SOURCES = \
   algo/x14.c \
   algo/x15.c \
   algo/x17.c \
+  algo/egihash_algo.cpp \
   algo/xevan.c \
   algo/yescrypt.c \
   algo/zr5.c
@@ -131,7 +134,7 @@ cpuminer_CPPFLAGS = @LIBCURL_CPPFLAGS@ $(ALL_INCLUDES)
 cpuminer_CFLAGS   = -Wno-pointer-sign -Wno-pointer-to-int-cast $(disable_flags)
 
 if HAVE_WINDOWS
-cpuminer_CFLAGS += -Wl,--stack,10485760
+cpuminer_CFLAGS += -Wl,--stack,10485760  -D__STDC_WANT_LIB_EXT1__=1 -DUSE_SECURE_MEMZERO
 cpuminer_LDADD += -lcrypt32 -lgdi32 -lgcc -lgcc_eh
 endif
 
@@ -147,7 +150,7 @@ common_ccflags = $(DEFS) $(ALL_INCLUDES) $(cpuminer_CPPFLAGS) $(CPPFLAGS) $(cpum
 # special CFLAGS (if you find a simpler way to do that tell me ;)
 cpuminer-neoscrypt.o: neoscrypt.c
 	@echo "CUSTOM ${@}: ${filter %.o,${^}} ${filter %.c,${^}}"
-	$(CC) $(common_ccflags) -g -O3 $(gprof_cflags) -MT $@ -MD -MP -c -o $@ $<
+	$(CC) $(common_ccflags) -g  $(gprof_cflags) -MT $@ -MD -MP -c -o $@ $<
 
 
 endif
